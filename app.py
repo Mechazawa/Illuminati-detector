@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, redirect
 from detector import detect_illuminati
 from uuid import uuid4
 import os
@@ -32,9 +32,18 @@ def find_illuminati():
     path = 'uploads/{}.{}'.format(uuid4().hex, file.filename.split('.')[-1])
     file.save(path)
 
-    image_path = detect_illuminati(path)
+    checksum = detect_illuminati(path)
     os.remove(path)
-    return render_template('find.html', image_path=image_path)
+    return redirect('/result/{}'.format(checksum))
+
+
+@app.route('/result/<checksum>', methods=['GET'])
+def show_result(checksum):
+    image_path = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
+    if not os.path.exists(image_path):
+        return redirect('/')
+
+    return render_template('display_result.html', image_path=image_path)
 
 if __name__ == '__main__':
     app.run('127.0.0.1', 1337, True)

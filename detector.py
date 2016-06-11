@@ -44,7 +44,7 @@ def detect_illuminati(path):
     path_cache_confirmed = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
 
     if os.path.exists(path_cache_confirmed):
-        return path_cache_confirmed
+        return checksum
 
     if os.path.exists(path_cache):
         return None
