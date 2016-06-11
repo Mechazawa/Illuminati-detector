@@ -17,12 +17,12 @@ def get_triangles_from_contours(contours):
 def get_triangle_angles(contour):
     points = np.array([c[0] for c in contour])
 
-    A = points[1] - points[0]
-    B = points[2] - points[1]
-    C = points[0] - points[2]
+    a = points[1] - points[0]
+    b = points[2] - points[1]
+    c = points[0] - points[2]
 
     angles = []
-    for e1, e2 in ((A, -B), (B, -C), (C, -A)):
+    for e1, e2 in ((a, -b), (b, -c), (c, -a)):
         num = np.dot(e1, e2)
         denom = np.linalg.norm(e1) * np.linalg.norm(e2)
         angles.append(np.arccos(num/denom) * 180 / np.pi)
