@@ -5,6 +5,7 @@ import cv2 as opencv
 import numpy as np
 import hashlib
 import os
+import shutil
 
 
 def get_triangles_from_contours(contours):
@@ -37,14 +38,18 @@ def checksum_md5(filename):
     return md5.hexdigest()
 
 
-def detect_illuminati(path):
-    path_cache = 'cache/{}_confirmed.jpg'.format(checksum_md5(path))
+def detect_illuminati(path, caching=False):
+    if caching:
+        path_cache = 'cache/{}.jpg'.format(checksum_md5(path))
+        path_cache_confirmed = 'cache/{}_confirmed.jpg'.format(checksum_md5(path))
 
-    if os.path.exists(path_cache):
-        return True
+        if os.path.exists(path_cache_confirmed):
+            return True
 
-    if os.path.exists(path):
-        return False
+        if os.path.exists(path_cache):
+            return False
+
+        shutil.copy(path, path_cache)
 
     image_original_color = opencv.imread(path)
     image_gray = opencv.imread(path, opencv.IMREAD_GRAYSCALE)
