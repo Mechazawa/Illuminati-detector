@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, abort
 from detector import detect_illuminati
-import shutil
 from uuid import uuid4
+import os
 
 app = Flask(__name__)
 
@@ -32,7 +32,9 @@ def find_illuminati():
     path = 'uploads/{}.{}'.format(uuid4().hex, file.filename.split('.')[-1])
     file.save(path)
 
-    return render_template('find.html', image_path=detect_illuminati(path))
+    image_path = detect_illuminati(path)
+    os.remove(path)
+    return render_template('find.html', image_path=image_path)
 
 if __name__ == '__main__':
     app.run('127.0.0.1', 1337, True)
