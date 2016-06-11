@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    {% if image_path %}
+        <title>Illuminati detected!</title>
+    {% else %}
+        <title>Nothing detected</title>
+    {% endif %}
 </head>
 <body>
     {% if image_path %}
