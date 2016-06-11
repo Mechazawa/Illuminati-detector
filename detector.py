@@ -55,7 +55,12 @@ def detect_illuminati(path):
     image_gray = opencv.imread(path, opencv.IMREAD_GRAYSCALE)
     image = opencv.blur(image_gray, (3, 3))
     _, image_threshold = opencv.threshold(image, 128, 255, opencv.THRESH_BINARY)
-    _, contours, hierarchy = opencv.findContours(image_threshold, opencv.RETR_LIST, opencv.CHAIN_APPROX_SIMPLE)
+
+    result = opencv.findContours(image_threshold, opencv.RETR_LIST, opencv.CHAIN_APPROX_SIMPLE)
+    if len(result) == 3:
+        _, contours, hierarchy = result
+    else:
+        contours, hierarchy = result
 
     found = []
     for contour in get_triangles_from_contours(contours):
