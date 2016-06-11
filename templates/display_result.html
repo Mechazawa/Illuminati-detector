@@ -13,5 +13,13 @@
     {% else %}
         <h1>That image does not seem to contain any conspiracies</h1>
     {% endif %}
+
+    <p>
+        Try another one
+    </p>
+    <form method="post" enctype="multipart/form-data" action="/find">
+        <input type="file" name="image">
+        <input type="submit" value="Upload">
+    </form>
 </body>
 </html>
