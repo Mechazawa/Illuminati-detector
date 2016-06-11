@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    {% if image_path %}
+        <img src="/{{ image_path }}">
+    {% else %}
+        <h1>That image does not seem to contain any conspiracy</h1>
+    {% endif %}
+</body>
+</html>

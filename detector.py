@@ -38,19 +38,18 @@ def checksum_md5(filename):
     return md5.hexdigest()
 
 
-def detect_illuminati(path, caching=False):
-    if caching:
-        checksum = checksum_md5(path)
-        path_cache = 'cache/{}.jpg'.format(checksum)
-        path_cache_confirmed = 'cache/{}_confirmed.jpg'.format(checksum)
+def detect_illuminati(path):
+    checksum = checksum_md5(path)
+    path_cache = 'static/images/cache/{}.jpg'.format(checksum)
+    path_cache_confirmed = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
 
-        if os.path.exists(path_cache_confirmed):
-            return True
+    if os.path.exists(path_cache_confirmed):
+        return path_cache_confirmed
 
-        if os.path.exists(path_cache):
-            return False
+    if os.path.exists(path_cache):
+        return None
 
-        shutil.copy(path, path_cache)
+    shutil.copy(path, path_cache)
 
     image_original_color = opencv.imread(path)
     image_gray = opencv.imread(path, opencv.IMREAD_GRAYSCALE)
@@ -67,9 +66,10 @@ def detect_illuminati(path, caching=False):
             opencv.drawContours(image_original_color, [contour], 0, (0, 255, 0), -1)
 
     if len(found) > 0:
-        opencv.imwrite(path_cache, image_original_color)
+        opencv.imwrite(path_cache_confirmed, image_original_color)
+        return path_cache_confirmed
 
-    return len(found) > 0
+    return None
 
 
 def main(path):
