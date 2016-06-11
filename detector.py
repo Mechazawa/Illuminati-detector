@@ -40,8 +40,9 @@ def checksum_md5(filename):
 
 def detect_illuminati(path, caching=False):
     if caching:
-        path_cache = 'cache/{}.jpg'.format(checksum_md5(path))
-        path_cache_confirmed = 'cache/{}_confirmed.jpg'.format(checksum_md5(path))
+        checksum = checksum_md5(path)
+        path_cache = 'cache/{}.jpg'.format(checksum)
+        path_cache_confirmed = 'cache/{}_confirmed.jpg'.format(checksum)
 
         if os.path.exists(path_cache_confirmed):
             return True
