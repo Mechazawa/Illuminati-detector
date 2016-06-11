@@ -43,11 +43,8 @@ def detect_illuminati(path):
     path_cache = 'static/images/cache/{}.jpg'.format(checksum)
     path_cache_confirmed = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
 
-    if os.path.exists(path_cache_confirmed):
+    if os.path.exists(path_cache_confirmed) or os.path.exists(path_cache):
         return checksum
-
-    if os.path.exists(path_cache):
-        return None
 
     shutil.copy(path, path_cache)
 
@@ -72,9 +69,8 @@ def detect_illuminati(path):
 
     if len(found) > 0:
         opencv.imwrite(path_cache_confirmed, image_original_color)
-        return path_cache_confirmed
 
-    return None
+    return checksum
 
 
 def main(path):
