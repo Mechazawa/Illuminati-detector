@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, abort, redirect
+from flask import Flask, render_template, request, abort, redirect, send_from_directory
 from detector import detect_illuminati
 from uuid import uuid4
 import os
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 
 mime_whitelist = [
     'image/png',
@@ -12,6 +12,12 @@ mime_whitelist = [
     'image/jpeg',
     'image/bitmap'
 ]
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/', methods=['GET'])
