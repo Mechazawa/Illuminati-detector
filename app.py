@@ -49,7 +49,7 @@ def find_illuminati():
 def show_result(checksum):
     image_path = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
     if not os.path.exists(image_path):
-        return redirect('/')
+        image_path = None
 
     return render_template('display_result.html', image_path=image_path)
 
