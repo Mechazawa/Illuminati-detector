@@ -72,11 +72,6 @@ def detect_illuminati(path):
 
     return checksum
 
-
-def main(path):
-    detect_illuminati(path)
-
 if __name__ == '__main__':
-    main(argv[1])
-
-
+    maindetect_illuminati
+    
