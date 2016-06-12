@@ -38,12 +38,12 @@ def checksum_md5(filename):
     return md5.hexdigest()
 
 
-def detect_illuminati(path):
+def detect_illuminati(path, cache=True):
     checksum = checksum_md5(path)
     path_cache = 'static/images/cache/{}.jpg'.format(checksum)
     path_cache_confirmed = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
 
-    if os.path.exists(path_cache_confirmed) or os.path.exists(path_cache):
+    if cache and os.path.exists(path_cache_confirmed) or os.path.exists(path_cache):
         return checksum
 
     shutil.copy(path, path_cache)
@@ -73,5 +73,5 @@ def detect_illuminati(path):
     return checksum
 
 if __name__ == '__main__':
-    maindetect_illuminati
+    detect_illuminati(argv[1], False)
     
