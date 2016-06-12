@@ -74,7 +74,8 @@ def detect_illuminati(path, cache=True):
     for contour in get_triangles_from_contours(contours):
         angles = get_triangle_angles(contour)
 
-        if len(filter(lambda a: 95 >= a >= 45, angles)) == 3:
+        area = opencv.contourArea(contour)
+        if len(filter(lambda a: 95 >= a >= 45, angles)) == 3 and area > 80:
             found.append(contour)
             opencv.drawContours(image_original_color, [contour], 0, (0, 255, 0), -1)
 
@@ -85,4 +86,3 @@ def detect_illuminati(path, cache=True):
 
 if __name__ == '__main__':
     detect_illuminati(argv[1], False)
-    
