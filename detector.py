@@ -92,7 +92,6 @@ def detect_illuminati(path, blur_seq=None, thresh_seq=None, ep_buffer_seq=None, 
                     if len(filter(lambda a: 95 >= a >= 40, angles)) == 3 and 1000 >= area >= 10:
                         found.append(contour)
 
-    print 'found', found
     if len(found) > 0:
         for f in found:
             opencv.drawContours(image_original_color, [f], 0, (0, 255, 0), -1)
