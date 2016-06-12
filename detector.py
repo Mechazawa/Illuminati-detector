@@ -30,6 +30,17 @@ def get_triangle_angles(contour):
     return angles
 
 
+# preserves the ratio
+def resize_to_max(image, _max=800):
+    _max += 0.0
+    width, height = image.shape[:2]
+    ratio = _max / max(width, height)
+    if ratio >= 1:
+        return image
+
+    return opencv.resize(image, (0, 0), fx=ratio, fy=ratio)
+
+
 def checksum_md5(filename):
     md5 = hashlib.md5()
     with open(filename,'rb') as f:
@@ -43,14 +54,14 @@ def detect_illuminati(path, cache=True):
     path_cache = 'static/images/cache/{}.jpg'.format(checksum)
     path_cache_confirmed = 'static/images/cache/{}_confirmed.jpg'.format(checksum)
 
-    if cache and os.path.exists(path_cache_confirmed) or os.path.exists(path_cache):
+    if cache and (os.path.exists(path_cache_confirmed) or os.path.exists(path_cache)):
         return checksum
 
     shutil.copy(path, path_cache)
 
-    image_original_color = opencv.imread(path)
-    image_gray = opencv.imread(path, opencv.IMREAD_GRAYSCALE)
-    image = opencv.blur(image_gray, (3, 3))
+    image_original_color = resize_to_max(opencv.imread(path))
+    image_gray = resize_to_max(opencv.imread(path, opencv.IMREAD_GRAYSCALE))
+    image = opencv.blur(image_gray, (1, 1))
     _, image_threshold = opencv.threshold(image, 128, 255, opencv.THRESH_BINARY)
 
     result = opencv.findContours(image_threshold, opencv.RETR_LIST, opencv.CHAIN_APPROX_SIMPLE)
