@@ -89,7 +89,7 @@ def detect_illuminati(path, blur_seq=None, thresh_seq=None, ep_buffer_seq=None, 
                     angles = get_triangle_angles(contour)
 
                     area = opencv.contourArea(contour)
-                    if len(filter(lambda a: 95 >= a >= 40, angles)) == 3 and 10000 >= area >= 10:
+                    if len(filter(lambda a: 95 >= a >= 40, angles)) == 3 and 40000 >= area >= 10:
                         found.append(contour)
 
     if len(found) > 0:
