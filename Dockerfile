@@ -1,8 +1,13 @@
-FROM python:3
+FROM python:3-slim-buster
 
 EXPOSE 5000
 
 WORKDIR /usr/src/app
+
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6 -y
+RUN apt-get clean
+
 
 COPY requirements.txt ./
 RUN pip install --upgrade pip
